@@ -1,16 +1,11 @@
 class Solution {
 public:
-    string destCity(vector<vector<string>>& paths) {
-        unordered_map<string,string> umap;
-        for(auto i:paths){
-            umap[i[0]]=i[1];
-        }
-        for(auto i:paths){
-            if(umap.find(i[1])==umap.end()){
-                return i[1];
-            }
-        }
-        return "";
-        
+    string destCity(vector<vector<string>>& p) {
+        set<string> s;		
+        for(auto &x:p)
+        s.insert(x[1]);  		
+        for(auto &x:p)
+        s.erase(x[0]);
+        return *s.begin();
     }
 };
