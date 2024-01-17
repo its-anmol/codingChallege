@@ -11,19 +11,19 @@
  */
 class Solution {
 public:
-    void mirror(TreeNode*root){
-        if(root==nullptr) return;
-        else{
-            mirror(root->left);
-            mirror(root->right);
-            TreeNode *temp;
-            temp=root->left;
-            root->left=root->right;
-            root->right=temp;
-        }
-    }
     TreeNode* invertTree(TreeNode* root) {
-        mirror(root);
+        queue<TreeNode *> st;
+        if(root==nullptr) return nullptr;
+        st.push(root);
+        while(st.empty()==false){
+            TreeNode* top=st.front();
+            st.pop();
+            if(top!=nullptr){
+                st.push(top->left);
+                st.push(top->right);
+                swap(top->left,top->right);
+            }
+        }
         return root;
     }
 };
