@@ -1,24 +1,19 @@
 class Solution {
 public:
     int numSubarraysWithSum(vector<int>& nums, int goal) {
-        return atmostk(nums,goal)-atmostk(nums,goal-1);
-    }
-    int atmostk(vector<int>&nums,int goal){
-        int start=0;
-        int end=0;
+        unordered_map<int,int> umap;
         int sum=0;
-        int ans=0;
-        while(end<nums.size()){
-            sum+=nums[end];
-            while(start<=end && sum>goal){
-                sum-=nums[start];
-                start++;
+        int count=0;
+        for(int i=0;i<nums.size();i++){
+            sum+=nums[i];
+            if(sum==goal){
+                count++;
             }
-            if(sum<=goal){
-                ans+=(end-start+1);
+            if(umap.find(sum-goal)!=umap.end()){
+                count+=umap[sum-goal];
             }
-            end++;
+            umap[sum]++;
         }
-        return ans;
+        return count;
     }
 };
