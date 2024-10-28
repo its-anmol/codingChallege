@@ -1,23 +1,18 @@
 class Solution {
 public:
     int longestSquareStreak(vector<int>& nums) {
-        int maxStreak = -1;
-        std::unordered_map<int, int> streaks;
-        
-        std::sort(nums.begin(), nums.end());
-        
-        for (int i : nums) {
-            int root = static_cast<int>(std::sqrt(i));
-            
-            if (root * root == i && streaks.find(root) != streaks.end()) {
-                streaks[i] = streaks[root] + 1;
-                maxStreak = std::max(streaks[i], maxStreak);
+        unordered_map<int, int> streakLengths;
+        int longestStreak = 1;
+        sort(nums.begin(), nums.end());
+        for (int number : nums) {
+            int root = (int)sqrt(number);
+            if (root * root == number && streakLengths.find(root) != streakLengths.end()) {
+                streakLengths[number] = streakLengths[root] + 1;
+                longestStreak=max(longestStreak,streakLengths[number]);
             } else {
-                streaks[i] = 1;
-                maxStreak = std::max(streaks[i], maxStreak);
+                streakLengths[number] = 1;
             }
         }
-        
-        return maxStreak == 1 ? -1 : maxStreak;
+        return longestStreak == 1 ? -1 : longestStreak;
     }
 };
